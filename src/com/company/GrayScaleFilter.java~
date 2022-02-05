@@ -1,0 +1,53 @@
+package com.company;
+
+import java.awt.Color;
+import java.awt.image.ImageFilter;
+
+
+
+
+public class GrayScaleFilter extends ImageFilter {
+
+    /**
+     * Creates a new grayscaled BufferedImage object from the given source image
+     * by averaging each pixels RGB value.
+     *
+     * @param inputImageAbsPath the absolute path of the image file, including its name and extension.
+     * @return a BufferedImage object.
+     */
+    Color[] grayLevels = new Color[256];
+    public GrayScaleFilter(String name){
+        super(name);
+    }
+
+    public Color[][] apply(Color[][] inPixels, double paramValue){
+        int height = inPixels.length;
+        int width = inPixels[0].length;
+        Color[][] outPixels = new Color[height][width];
+        for (int i = 0; i < 256; i++) {
+            grayLevels[i] = new Color(i, i, i);
+        }
+
+        for(int i = 0; i < height; i++){
+            for(int j = 0; j < width; j++){
+                Color pixel = inPixels[i][j];
+                outPixels[i][j] = grayLevels[index];
+            }
+        }
+        return outPixels;
+    }
+
+    protected short[][] computeIntensity(Color[][] pixels) {
+        int height = pixels.length;
+        int width = pixels[0].length;
+        short[][] intensity = new short[height][width];
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                Color c = pixels[i][j];
+                intensity[i][j] = (short) ((c.getRed() + c.getGreen() + c
+                        .getBlue()) / 3);
+            }
+        }
+        return intensity;
+    }
+}
